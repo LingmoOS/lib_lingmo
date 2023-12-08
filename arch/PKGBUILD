@@ -2,7 +2,7 @@
 
 pkgname=lingmo-liblingmo
 _pkgname=liblingmo
-pkgver=1.9.0
+pkgver=1.9.6
 pkgrel=1
 pkgdesc="System library for Lingmo OS applications"
 arch=('x86_64')
