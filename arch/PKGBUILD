@@ -1,0 +1,37 @@
+# Maintainer: Yoyo <admin@yzzi.icu>
+
+pkgname=lingmo-liblingmo
+_pkgname=liblingmo
+pkgver=1.9.0
+pkgrel=1
+pkgdesc="System library for Lingmo OS applications"
+arch=('x86_64')
+# url="https://github.com/yoyo-os/libyoyo"
+license=('GPL')
+depends=('kscreen' 'modemmanager-qt5' 'networkmanager-qt5' 'qt5-quickcontrols2'
+         # via dbus:
+         'accountsservice' 'bluez' 'bluez-qt5')
+makedepends=('extra-cmake-modules' 'ninja' 'qt5-tools' 'git')
+provides=("$_pkgname")
+conflicts=("$_pkgname")
+source=("git+$url.git")
+sha512sums=('SKIP')
+
+# pkgver() {
+#   cd $_pkgname
+#   git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+# }
+
+build() {
+#  cd $_pkgname
+  cd ..
+
+  cmake -GNinja -DCMAKE_INSTALL_PREFIX=/usr .
+  ninja
+}
+
+package() {
+#   cd $_pkgname
+  cd ..
+  DESTDIR="$pkgdir" ninja install
+}
