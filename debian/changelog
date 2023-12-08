@@ -1,3 +1,9 @@
+liblingmo (1.9.6) UNRELEASED; urgency=high
+
+  * Update <lingmo@lingmo.org>
+
+ -- Lingmo OS Team <lingmo@lingmo.org> Fri, 8 Dec 2023 20:30:15 +0800
+
 liblingmo (1.1.0+1) UNRELEASED; urgency=high
 
   * Update <lingmoos@foxmail.com>
