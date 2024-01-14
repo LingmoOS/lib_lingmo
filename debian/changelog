@@ -1,41 +1,11 @@
 liblingmo (1.9.9-10) UNRELEASED; urgency=high
 
-  * Update <lingmo@lingmo.org>
+  * Initial release (LingmoOS)  <lingmo@lingmo.org>
 
- -- Lingmo OS Team <lingmo@lingmo.org> Sun, 07 Jal 2024 20:30:15 +0800
+ -- LingmoOS Packaging Team <lingmo@lingmo.org>  Sat, 07 Jan 2024 22:36:35 +0800
 
-liblingmo (1.9.6) UNRELEASED; urgency=high
+liblingmo (1.9.9) UNRELEASED; urgency=high
 
-  * Update <lingmo@lingmo.org>
+  * Initial release (LingmoOS)  <lingmo@lingmo.org>
 
- -- Lingmo OS Team <lingmo@lingmo.org> Fri, 8 Dec 2023 20:30:15 +0800
-
-liblingmo (1.1.0+1) UNRELEASED; urgency=high
-
-  * Update <lingmoos@foxmail.com>
-
- -- Floating dream <2422586862@qq.com> Tue, 13 Sep 2023 23:00:03 +0800
-
-liblingmo (23.02.8) UNRELEASED; urgency=high
-
-  * Initial release (LingmoOS)  <lingmoos@foxmail.com>
-
- -- Floating dream <2422586862@qq.com>  Wed, 19 Jul 2023 06:05:47 +0800
-
-liblingmo (23.02.8) UNRELEASED; urgency=high
-
-  * Initial release (LingmoOS)  <lingmoos@foxmail.com>
-
- -- Floating dream <2422586862@qq.com>  Tue, 14 Feb 2023 21:06:52 +0800
-
-liblingmo (0.9) UNRELEASED; urgency=high
-
-  * Initial release (LingmoOS)  <lingmoos@foxmail.com>
-
- -- LingmoOS Packaging Team <lingmoos@foxmail.com>  Wed, 22 Jun 2022 23:52:49 +0800
-
-liblingmo (0.8-1) UNRELEASED; urgency=high
-
-  * Initial release (LingmoOS)  <lingmoos@foxmail.com>
-
- -- LingmoOS Packaging Team <lingmoos@foxmail.com>  Wed, 15 Jun 2022 03:21:19 +0800
+ -- LingmoOS Packaging Team <lingmo@lingmo.org>  Fri, 15 Dec 2023 22:36:35 +0800

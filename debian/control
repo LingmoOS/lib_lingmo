@@ -1,7 +1,7 @@
 Source: liblingmo
 Section: devel
 Priority: optional
-Maintainer: Lingmo OS Team <lingmo@lingmo.org>
+Maintainer: LingmoOS <lingmo@lingmo.org>
 Build-Depends: cmake,
                debhelper (>= 9),
                extra-cmake-modules,
@@ -13,14 +13,13 @@ Build-Depends: cmake,
                libqt5sensors5-dev,
                libcanberra-dev,
                libpulse-dev,
-               kscreen,
                sound-theme-freedesktop,
                qtbase5-dev,
                qtdeclarative5-dev,
                qtquickcontrols2-5-dev,
                qttools5-dev,
                qttools5-dev-tools
-Standards-Version: 4.5.2
+Standards-Version: 4.5.0
 Homepage: https://lingmo.org
 
 Package: liblingmo

@@ -1,4 +1,4 @@
-# Lingmo OS System Library
+# System Library
 
 ## Dependencies
 

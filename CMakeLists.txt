@@ -33,11 +33,11 @@ if(INSTALL_QMLDIR)
 else()
     message(FATAL_ERROR "qml directory cannot be detected.")
 endif()
-# --------------------------------------------
+# -------------------------------------------
 add_subdirectory(accounts)
 add_subdirectory(bluez)
 add_subdirectory(mpris)
 add_subdirectory(networkmanagement)
-# add_subdirectory(screen)
+add_subdirectory(screen)
 add_subdirectory(system)
 add_subdirectory(audio)
