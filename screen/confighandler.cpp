@@ -65,7 +65,7 @@ void ConfigHandler::setConfig(KScreen::ConfigPtr config)
     connect(m_config.data(), &KScreen::Config::outputRemoved, this, [this]() {
         Q_EMIT outputConnect(false);
     });
-    connect(m_config.data(), &KScreen::Config::primaryOutputChanged, this, &ConfigHandler::primaryOutputChanged);
+    connect(m_config.data(), &KScreen::Config::prioritiesChanged, this, &ConfigHandler::outputPrioritiesChanged);
 
     Q_EMIT outputModelChanged();
 }
@@ -219,9 +219,10 @@ void ConfigHandler::primaryOutputSelected(int index)
     // TODO
 }
 
-void ConfigHandler::primaryOutputChanged(const KScreen::OutputPtr &output)
+void ConfigHandler::outputPrioritiesChanged()
 {
-    Q_UNUSED(output)
+    checkNeedsSave();
+    Q_EMIT changed();
 }
 
 Control::OutputRetention ConfigHandler::getRetention() const

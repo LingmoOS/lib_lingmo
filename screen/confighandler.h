@@ -84,7 +84,7 @@ private:
     QSize screenSize() const;
     Control::OutputRetention getRetention() const;
     void primaryOutputSelected(int index);
-    void primaryOutputChanged(const KScreen::OutputPtr &output);
+    void outputPrioritiesChanged();
     void initOutput(const KScreen::OutputPtr &output);
     void resetScale(const KScreen::OutputPtr &output);
 
