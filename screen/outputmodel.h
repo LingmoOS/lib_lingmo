@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <kscreen/config.h>
 #include <kscreen/output.h>
+#include <kscreen/mode.h>
 
 #include <QAbstractListModel>
 #include <QPoint>
