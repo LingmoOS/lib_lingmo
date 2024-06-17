@@ -14,7 +14,7 @@
 #include <BluezQt/Adapter>
 #include <BluezQt/Device>
 
-static int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
+static long long int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
