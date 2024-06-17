@@ -9,7 +9,7 @@
 Screen::Screen(QObject *parent)
     : QObject(parent)
 {
-    qmlRegisterType<OutputModel>();
+    qmlRegisterType<OutputModel>("org.kde.kcm", 1, 0, "OutputModel");
     load();
 }
 
