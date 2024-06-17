@@ -15,15 +15,16 @@ include(GenerateExportHeader)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-set(QT Core Gui Widgets DBus Xml Concurrent)
-find_package(Qt6 REQUIRED ${QT})
+set(QT Core Gui QuickControls2 Widgets DBus Xml Concurrent)
+find_package(Qt6 COMPONENTS ${QT} REQUIRED)
 
-set(INSTALL_QMLDIR ${Qt6Core_QML_INSTALL_DIR})
+set(QT_INSTALL_QMLDIR "")
+get_target_property(QT_INSTALL_QMLDIR Qt6::Core IMPORTED_LOCATION)
 
-if(NOT INSTALL_QMLDIR)
-    message(FATAL_ERROR "qml directory cannot be detected.")
+if(NOT QT_INSTALL_QMLDIR)
+    message(FATAL_ERROR "QML directory cannot be detected.")
 else()
-    message(STATUS "qml directory: ${INSTALL_QMLDIR}")
+    message(STATUS "QML directory: ${QT_INSTALL_QMLDIR}")
 endif()
 # -------------------------------------------
 add_subdirectory(accounts)
