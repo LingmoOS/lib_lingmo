@@ -18,15 +18,13 @@ include(CMakePackageConfigHelpers)
 set(QT Core Gui Widgets DBus Xml Concurrent)
 find_package(Qt6 REQUIRED ${QT})
 
-# 获取Qt安装的QML目录
-get_target_property(QT_INSTALL_QMLDIR Qt6::qml IMPORTED_LOCATION)
+set(INSTALL_QMLDIR ${Qt6Core_QML_INSTALL_DIR})
 
-if(NOT QT_INSTALL_QMLDIR)
-    message(FATAL_ERROR "QML directory cannot be detected.")
+if(NOT INSTALL_QMLDIR)
+    message(FATAL_ERROR "qml directory cannot be detected.")
 else()
-    message(STATUS "QML directory: ${QT_INSTALL_QMLDIR}")
+    message(STATUS "qml directory: ${INSTALL_QMLDIR}")
 endif()
-
 # -------------------------------------------
 add_subdirectory(accounts)
 add_subdirectory(bluez)
