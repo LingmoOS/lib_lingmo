@@ -22,7 +22,7 @@ static long long int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> 
     return manager->m_adapters.count();
 }
 
-static DeclarativeAdapter *adaptersAtFunction(QQmlListProperty<DeclarativeAdapter> *property, int index)
+static DeclarativeAdapter *adaptersAtFunction(QQmlListProperty<DeclarativeAdapter> *property, long long int index)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
