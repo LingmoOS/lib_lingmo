@@ -15,7 +15,7 @@ include(GenerateExportHeader)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-set(QT Core Gui QuickControls2 Widgets DBus Xml Concurrent)
+set(QT Core Gui Widgets DBus Xml Concurrent)
 find_package(Qt6 REQUIRED ${QT})
 
 # 获取Qt安装的QML目录
