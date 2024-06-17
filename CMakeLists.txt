@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project(liblingmo)
 
@@ -15,24 +15,19 @@ include(GenerateExportHeader)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-set(QT Core Gui Quick QuickControls2 Widgets DBus Xml Concurrent)
-find_package(Qt5 REQUIRED ${QT})
+set(QT Core Gui Qml Quick QuickControls2 Widgets DBus Xml Concurrent)
 
-# Get the installation directory from qmake
-get_target_property(QT_QMAKE_EXECUTABLE ${Qt5Core_QMAKE_EXECUTABLE} IMPORTED_LOCATION)
-if(NOT QT_QMAKE_EXECUTABLE)
-    message(FATAL_ERROR "qmake is not found.")
-endif()
+find_package(Qt6 COMPONENTS ${QT} REQUIRED)
 
-execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_QML
-    OUTPUT_VARIABLE INSTALL_QMLDIR
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+set(INSTALL_QMLDIR "")
+get_target_property(INSTALL_QMLDIR Qt6::qmlimportscanner IMPORTED_LOCATION)
+
 if(INSTALL_QMLDIR)
-    message(STATUS "qml directory:" "${INSTALL_QMLDIR}")
+    message(STATUS "qml directory: ${INSTALL_QMLDIR}")
 else()
     message(FATAL_ERROR "qml directory cannot be detected.")
 endif()
+
 # -------------------------------------------
 add_subdirectory(accounts)
 add_subdirectory(bluez)
