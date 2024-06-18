@@ -33,6 +33,23 @@
 /*
  * Implementation of interface class MprisPlayerInterface
  */
+QString loopStatusToString(Mpris::LoopStatus status) {
+    switch (status) {
+        case Mpris::None: return "None";
+        case Mpris::Track: return "Track";
+        case Mpris::Playlist: return "Playlist";
+        default: return "Unknown";
+    }
+}
+
+QString playbackStatusToString(Mpris::PlaybackStatus status) {
+    switch (status) {
+        case Mpris::Playing: return "Playing";
+        case Mpris::Paused: return "Paused";
+        case Mpris::Stopped: return "Stopped";
+        default: return "Unknown";
+    }
+}
 
 MprisPlayerInterface::MprisPlayerInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent)
     : DBusExtendedAbstractInterface(service, path, staticInterfaceName(), connection, parent)
@@ -42,10 +59,10 @@ MprisPlayerInterface::MprisPlayerInterface(const QString &service, const QString
     , m_canPause(false)
     , m_canPlay(false)
     , m_canSeek(false)
-    , m_loopStatus(Mpris::None)
+    , m_loopStatus(loopStatusToString(Mpris::None))
     , m_maximumRate(1)
     , m_minimumRate(1)
-    , m_playbackStatus(Mpris::Stopped)
+    , m_playbackStatus(playbackStatusToString(Mpris::Stopped))
     , m_position(0)
     , m_rate(1)
     , m_shuffle(false)

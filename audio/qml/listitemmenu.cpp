@@ -11,6 +11,7 @@
 #include <QQuickItem>
 #include <QQuickWindow>
 #include <QWindow>
+#include <QActionGroup>
 
 #include "card.h"
 #include "debug.h"

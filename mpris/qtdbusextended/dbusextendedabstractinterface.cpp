@@ -153,8 +153,10 @@ QVariant DBusExtendedAbstractInterface::internalPropGet(const char *propname, vo
     if (m_useCache) {
         int propertyIndex = metaObject()->indexOfProperty(propname);
         QMetaProperty metaProperty = metaObject()->property(propertyIndex);
-        return QVariant(metaProperty.type(), propertyPtr);
+        QMetaType metaType = metaProperty.metaType();
+        return QVariant(metaType, propertyPtr);
     }
+
 
     if (m_sync) {
         return property(propname);
@@ -188,24 +190,23 @@ QVariant DBusExtendedAbstractInterface::internalPropGet(const char *propname, vo
 
         // is this metatype registered?
         const char *expectedSignature = "";
-        if (int(metaProperty.type()) != QMetaType::QVariant) {
-            expectedSignature = QDBusMetaType::typeToSignature(metaProperty.userType());
-            if (0 == expectedSignature) {
+        if (metaProperty.metaType() != QMetaType::fromType<QVariant>()) {
+            expectedSignature = QDBusMetaType::typeToSignature(QMetaType(metaProperty.metaType().id()));
+            if (!expectedSignature) {
                 QString errorMessage =
                     QStringLiteral("Type %1 must be registered with Qt D-Bus "
-                                   "before it can be used to read property "
-                                   "%2.%3")
-                    .arg(metaProperty.typeName(),
-                         interface(),
-                         propname);
+                                "before it can be used to read property "
+                                "%2.%3")
+                    .arg(metaProperty.metaType().name(),
+                        interface(),
+                        propname);
                 m_lastExtendedError = QDBusMessage::createError(QDBusError::Failed, errorMessage);
                 qWarning() << Q_FUNC_INFO << errorMessage;
                 return QVariant();
             }
         }
+        return QVariant(metaProperty.metaType(), propertyPtr);
 
-        asyncProperty(propname);
-        return QVariant(metaProperty.type(), propertyPtr);
     }
 }
 
@@ -243,7 +244,7 @@ void DBusExtendedAbstractInterface::internalPropSet(const char *propname, const 
             return;
         }
 
-        asyncSetProperty(propname, QVariant(metaProperty.type(), propertyPtr));
+        asyncSetProperty(propname, QVariant(metaProperty.metaType(), propertyPtr));
     }
 }
 
@@ -385,16 +386,17 @@ QVariant DBusExtendedAbstractInterface::demarshall(const QString &interface, con
         return value;
     }
 
-    QVariant result = QVariant(metaProperty.userType(), (void*)0);
+    QVariant result = QVariant(QMetaType(metaProperty.userType()), nullptr);
+
     QString errorMessage;
-    const char *expectedSignature = QDBusMetaType::typeToSignature(metaProperty.userType());
+    const char *expectedSignature = QDBusMetaType::typeToSignature(QMetaType(metaProperty.userType()));
 
     if (value.userType() == qMetaTypeId<QDBusArgument>()) {
         // demarshalling a DBus argument ...
         QDBusArgument dbusArg = value.value<QDBusArgument>();
 
         if (expectedSignature == dbusArg.currentSignature().toLatin1()) {
-            QDBusMetaType::demarshall(dbusArg, metaProperty.userType(), result.data());
+            QDBusMetaType::demarshall(dbusArg, QMetaType(metaProperty.userType()), result.data());
             if (!result.isValid()) {
                 errorMessage = QStringLiteral("Unexpected failure demarshalling "
                                               "upon PropertiesChanged signal arrival "
@@ -415,7 +417,7 @@ QVariant DBusExtendedAbstractInterface::demarshall(const QString &interface, con
                          QString::fromLatin1(expectedSignature));
         }
     } else {
-        const char *actualSignature = QDBusMetaType::typeToSignature(value.userType());
+        const char *actualSignature = QDBusMetaType::typeToSignature(QMetaType(value.userType()));
 
         errorMessage = QStringLiteral("Unexpected `%1' (%2) "
                                       "upon PropertiesChanged signal arrival "
