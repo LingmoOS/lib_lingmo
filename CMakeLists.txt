@@ -32,7 +32,7 @@ endif()
 # -------------------------------------------
 add_subdirectory(accounts)
 add_subdirectory(bluez)
-# add_subdirectory(mpris)
+add_subdirectory(mpris)
 # add_subdirectory(networkmanagement)
 # add_subdirectory(screen)
 # add_subdirectory(system)
