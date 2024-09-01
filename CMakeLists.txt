@@ -16,18 +16,14 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 set(QT Core Gui Quick QuickControls2 Widgets DBus Xml Concurrent)
-find_package(Qt5 REQUIRED ${QT})
+find_package(Qt6 REQUIRED ${QT})
+
+find_package(ECM 5.93 REQUIRED NO_MODULE)
+list(APPEND CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 # Get the installation directory from qmake
-get_target_property(QT_QMAKE_EXECUTABLE ${Qt5Core_QMAKE_EXECUTABLE} IMPORTED_LOCATION)
-if(NOT QT_QMAKE_EXECUTABLE)
-    message(FATAL_ERROR "qmake is not found.")
-endif()
-
-execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_QML
-    OUTPUT_VARIABLE INSTALL_QMLDIR
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+include(ECMQueryQt)
+ecm_query_qt(INSTALL_QMLDIR QT_INSTALL_QML)
 if(INSTALL_QMLDIR)
     message(STATUS "qml directory:" "${INSTALL_QMLDIR}")
 else()
@@ -36,8 +32,8 @@ endif()
 # -------------------------------------------
 add_subdirectory(accounts)
 add_subdirectory(bluez)
-add_subdirectory(mpris)
-add_subdirectory(networkmanagement)
-add_subdirectory(screen)
-add_subdirectory(system)
-add_subdirectory(audio)
+# add_subdirectory(mpris)
+# add_subdirectory(networkmanagement)
+# add_subdirectory(screen)
+# add_subdirectory(system)
+# add_subdirectory(audio)
