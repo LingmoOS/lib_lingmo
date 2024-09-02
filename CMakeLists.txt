@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.5)
 
 project(liblingmo)
 
+add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x050F00)
+add_compile_options(-Wall -Werror)
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
