@@ -10,6 +10,10 @@
 
 #include <QAbstractListModel>
 
+#include <QtCore/qmetatype.h>
+#include "sink.h"
+#include "source.h"
+
 #include "maps.h"
 
 namespace QPulseAudio

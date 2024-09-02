@@ -89,13 +89,15 @@ void SortFilterModel::setFilterRegExp(const QString &exp)
     if (exp == filterRegExp()) {
         return;
     }
-    QSortFilterProxyModel::setFilterRegExp(QRegExp(exp, Qt::CaseInsensitive));
+    QRegularExpression re(exp);
+    re.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+    QSortFilterProxyModel::setFilterRegularExpression(re);
     Q_EMIT filterRegExpChanged(exp);
 }
 
 QString SortFilterModel::filterRegExp() const
 {
-    return QSortFilterProxyModel::filterRegExp().pattern();
+    return QSortFilterProxyModel::filterRegularExpression().pattern();
 }
 
 void SortFilterModel::setFilterString(const QString &filterString)

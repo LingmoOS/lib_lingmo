@@ -8,6 +8,8 @@
 #include <QObject>
 #include <canberra.h>
 
+#include <QQuickItem> 
+
 namespace QPulseAudio
 {
 class CanberraContext : public QObject

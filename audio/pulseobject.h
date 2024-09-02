@@ -9,6 +9,7 @@
 
 #include "debug.h"
 #include <QObject>
+#include <QVariantMap>
 
 #include <pulse/introspect.h>
 
@@ -38,7 +39,7 @@ public:
                 continue;
             }
             Q_ASSERT(value);
-            properties.insert(QString::fromUtf8(key), QString::fromUtf8(value));
+            properties.insert(QString::fromUtf8(key),  QVariant(QString::fromUtf8(value)));
         }
 
         if (m_properties != properties) {
