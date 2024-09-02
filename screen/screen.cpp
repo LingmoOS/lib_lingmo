@@ -9,7 +9,7 @@
 Screen::Screen(QObject *parent)
     : QObject(parent)
 {
-    qmlRegisterType<OutputModel>();
+    qmlRegisterType<OutputModel>("Lingmo.Screen", 1, 0, "Screen");
     load();
 }
 
