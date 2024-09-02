@@ -1,0 +1,5 @@
+{
+  "image": "docker.io/library/debian:trixie",
+  "features": {
+  }
+}
