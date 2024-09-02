@@ -7,6 +7,8 @@
 #ifndef MAPS_H
 #define MAPS_H
 
+#include <iterator>
+
 #include "debug.h"
 #include <QMap>
 #include <QObject>
@@ -87,7 +89,7 @@ public:
 
     QObject *objectAt(int index) const override
     {
-        return (m_data.constBegin() + index).value();
+        return std::next(m_data.constBegin(), index).value();
     }
 
     void reset()

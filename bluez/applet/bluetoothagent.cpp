@@ -19,6 +19,7 @@
 #include <QThreadStorage>
 
 #include <unistd.h>
+#include <cstdlib>
 
 static int cRandom()
 {
@@ -37,12 +38,12 @@ static int cRandom()
             QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
             QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
             // No /dev/urandom... try something else.
-            qsrand(getpid());
-            seed = qrand() ^ time(nullptr) ^ reinterpret_cast<quintptr>(QThread::currentThread());
+            srand(getpid());
+            seed = rand() ^ time(nullptr) ^ reinterpret_cast<quintptr>(QThread::currentThread());
         }
-        qsrand(seed);
+        srand(seed);
     }
-    return qrand();
+    return rand();
     QT_WARNING_POP
 }
 
@@ -122,7 +123,7 @@ QString BluetoothAgent::getPin(BluezQt::DevicePtr device)
         m_fromDatabase = true;
         if (m_pin.startsWith(QLatin1String("max:"))) {
             m_fromDatabase = false;
-            int num = m_pin.rightRef(m_pin.length() - 4).toInt();
+            int num = m_pin.right(m_pin.length() - 4).toInt();
             m_pin = QString::number(cRandom()).left(num);
         }
 

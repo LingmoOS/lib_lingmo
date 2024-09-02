@@ -99,7 +99,7 @@ void BluetoothManager::deviceDisconnect(const QString address)
     stopMediaPlayer(address);
     BluezQt::AdapterPtr adaptor = m_manager->usableAdapter();
     BluezQt::DevicePtr device = adaptor->deviceForAddress(address);
-    BluezQt::PendingCall *pairCall = device->disconnectFromDevice();
+    [[maybe_unused]] BluezQt::PendingCall *pairCall = device->disconnectFromDevice();
     //    connect(pairCall, &BluezQt::PendingCall::finished, this, &Bluetooth::disconnectFromDeviceFinished);
 }
 
@@ -108,7 +108,7 @@ void BluetoothManager::deviceRemoved(const QString address)
     stopMediaPlayer(address);
     BluezQt::AdapterPtr adaptor = m_manager->usableAdapter();
     BluezQt::DevicePtr device = adaptor->deviceForAddress(address);
-    BluezQt::PendingCall *removeCall = adaptor->removeDevice(device);
+    [[maybe_unused]] BluezQt::PendingCall *removeCall = adaptor->removeDevice(device);
     // connect(removeCall, &BluezQt::PendingCall::finished, this, &BluetoothManager::removeDeviceFinished);
 }
 

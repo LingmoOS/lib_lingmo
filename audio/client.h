@@ -10,6 +10,7 @@
 #include <pulse/introspect.h>
 
 #include <QMap>
+#include <QVariant>
 
 #include "pulseobject.h"
 
