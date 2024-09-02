@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Maintainer: LingmoOS <lingmo@lingmo.org>
 Build-Depends: cmake,
-               debhelper (>= 9),
+               debhelper (>= 11),
                extra-cmake-modules,
                libkf6networkmanagerqt-dev,
                libkf6modemmanagerqt-dev,
