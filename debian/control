@@ -27,6 +27,5 @@ Homepage: https://lingmo.org
 Package: liblingmo
 Architecture: any
 Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         libkf5screen-bin
+         ${shlibs:Depends}
 Description: LingmoOS Library
