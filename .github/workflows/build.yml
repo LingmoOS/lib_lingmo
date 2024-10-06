@@ -21,7 +21,7 @@ jobs:
 
     - name: Update repository
       run: apt-get update -y
-      
+
     - name: Install the basic dev packages
       run: apt-get install -y equivs curl git devscripts lintian build-essential automake autotools-dev cmake g++
 
