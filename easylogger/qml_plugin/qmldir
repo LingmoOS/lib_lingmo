@@ -1,0 +1,2 @@
+module Lingmo.Logger
+plugin lingmoaccounts_qmlplugins
