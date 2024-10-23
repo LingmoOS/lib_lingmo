@@ -1,2 +1,2 @@
 module Lingmo.Logger
-plugin lingmoaccounts_qmlplugins
+plugin lingmologger_qmlplugins
