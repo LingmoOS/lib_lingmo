@@ -1,6 +1,5 @@
 #pragma once
 
-#include "singleton.h"
 #include "stdafx.h"
 
 #include <QObject>
@@ -12,15 +11,11 @@ class LingmoLogger : public QObject {
     Q_OBJECT
     Q_PROPERTY_AUTO(QString, loggingTag)
     QML_NAMED_ELEMENT(LingmoLogger)
-    QML_SINGLETON
 
-private:
+public:
     explicit LingmoLogger(QObject* parent = nullptr);
 
     ~LingmoLogger();
-
-public:
-    SINGLETON(LingmoLogger)
 
     Q_INVOKABLE void lAssert(const QString& msg);
     Q_INVOKABLE void lError(const QString& msg);
@@ -35,7 +30,4 @@ public:
     Q_INVOKABLE void lInfoTag(const QString& tag, const QString& msg);
     Q_INVOKABLE void lDebugTag(const QString& tag, const QString& msg);
     Q_INVOKABLE void lVerboseTag(const QString& tag, const QString& msg);
-
-    // Call me in QML First!
-    Q_INVOKABLE void init();
 };

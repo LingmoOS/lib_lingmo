@@ -7,16 +7,6 @@ LingmoLogger::LingmoLogger(QObject* parent)
     : QObject(parent)
     , _loggingTag("NONAME")
 {
-}
-
-LingmoLogger::~LingmoLogger()
-{
-    elog_stop();
-    elog_deinit();
-}
-
-void LingmoLogger::init()
-{
     /* close printf buffer */
     setbuf(stdout, NULL);
     /* initialize EasyLogger */
@@ -29,6 +19,12 @@ void LingmoLogger::init()
     elog_set_fmt(ELOG_LVL_VERBOSE, ELOG_FMT_ALL & ~ELOG_FMT_FUNC);
     /* start EasyLogger */
     elog_start();
+}
+
+LingmoLogger::~LingmoLogger()
+{
+    elog_stop();
+    elog_deinit();
 }
 
 void LingmoLogger::lAssert(const QString& msg)

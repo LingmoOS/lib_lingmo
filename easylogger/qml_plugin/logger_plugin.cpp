@@ -11,13 +11,7 @@ public:
     void registerTypes(const char* uri) override
     {
         //@uri Lingmo.Logger
-        qmlRegisterSingletonType<LingmoLogger>(uri, 1, 0, "LingmoLogger",
-            [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
-                Q_UNUSED(scriptEngine)
-                QObject* instance = LingmoLogger::getInstance();
-                engine->setObjectOwnership(instance, QQmlEngine::CppOwnership);
-                return instance;
-            });
+        qmlRegisterType<LingmoLogger>(uri, 1, 0, "LingmoLogger");
     }
 
     void initializeEngine(QQmlEngine* engine, const char* uri) override {
