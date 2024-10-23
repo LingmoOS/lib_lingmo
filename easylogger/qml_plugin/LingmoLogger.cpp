@@ -10,6 +10,7 @@ LingmoLogger::LingmoLogger(QObject* parent)
     /* close printf buffer */
     setbuf(stdout, NULL);
     /* initialize EasyLogger */
+    elog_init();
     /* set EasyLogger log format */
     elog_set_fmt(ELOG_LVL_ASSERT, ELOG_FMT_ALL);
     elog_set_fmt(ELOG_LVL_ERROR, ELOG_FMT_LVL | ELOG_FMT_TAG | ELOG_FMT_TIME);
