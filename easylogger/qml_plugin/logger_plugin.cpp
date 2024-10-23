@@ -10,6 +10,7 @@ class QmlPlugins : public QQmlExtensionPlugin {
 public:
     void registerTypes(const char* uri) override
     {
+        //@uri Lingmo.Logger
         qmlRegisterSingletonType<LingmoLogger>(uri, 1, 0, "LingmoLogger",
             [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
                 Q_UNUSED(scriptEngine)
@@ -17,6 +18,11 @@ public:
                 engine->setObjectOwnership(instance, QQmlEngine::CppOwnership);
                 return instance;
             });
+    }
+
+    void initializeEngine(QQmlEngine* engine, const char* uri) override {
+        Q_UNUSED(uri)
+        Q_UNUSED(engine)
     }
 };
 
