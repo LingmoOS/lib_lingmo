@@ -20,7 +20,7 @@ set(PLUGIN_QMLTYPES_PATH ${CMAKE_CURRENT_BINARY_DIR}/plugin.qmltypes)
 # Create a custom command to generate the .qmltypes file
 add_custom_command(
     OUTPUT ${PLUGIN_QMLTYPES_PATH}
-    COMMAND /usr/bin/mkdir -p /tmp${CMAKE_CURRENT_SOURCE_DIR}/Lingmo/Logger && /usr/bin/cp -rv ${CMAKE_CURRENT_SOURCE_DIR}/* /tmp${CMAKE_CURRENT_SOURCE_DIR}/Lingmo/Logger
+    COMMAND /usr/bin/mkdir -p /tmp${CMAKE_CURRENT_SOURCE_DIR}/Lingmo/Logger && /usr/bin/cp -rv ${CMAKE_CURRENT_BINARY_DIR}/* /tmp${CMAKE_CURRENT_SOURCE_DIR}/Lingmo/Logger
     COMMAND QML_PLUGIN_PATH=/tmp${CMAKE_CURRENT_SOURCE_DIR} ${QMLPLUGINDUMP_EXECUTABLE} -noinstantiate -nonrelocatable ${PLUGIN_NAME} ${PLUGIN_VERSION} ${PLUGIN_PARENT_PATH} > ${PLUGIN_QMLTYPES_PATH}
     COMMAND /usr/bin/rm -rfv /tmp${CMAKE_CURRENT_SOURCE_DIR}
     DEPENDS lingmologger_qmlplugins
