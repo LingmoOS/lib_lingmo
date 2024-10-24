@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, qt5 ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, qt5 ]
 
 jobs:
   debian:
@@ -21,4 +21,4 @@ jobs:
     - name: Install build dependencies
       run: mk-build-deps -i -t "apt-get --yes" -r
     - name: Build Package
-      run: dpkg-buildpackage -b -uc -us -j$(nproc)
+      run: dpkg-buildpackage -b -uc -us -j1
