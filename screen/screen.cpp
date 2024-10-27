@@ -1,5 +1,6 @@
 #include "screen.h"
 #include "outputmodel.h"
+#include "confighandler.h"
 
 #include <kscreen/setconfigoperation.h>
 

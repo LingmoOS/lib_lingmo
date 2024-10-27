@@ -4,12 +4,11 @@
 #include <memory>
 #include <kscreen/getconfigoperation.h>
 
-#include "confighandler.h"
-#include "outputmodel.h"
+#include "lingmoscreen_qmlplugins_export.h"
 
-class ConfigHandler;
-class OutputModel;
-class Screen : public QObject
+#include "outputmodel.h"
+#include "confighandler.h"
+class LINGMOSCREEN_QMLPLUGINS_EXPORT Screen : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(OutputModel *outputModel READ outputModel NOTIFY outputModelChanged)

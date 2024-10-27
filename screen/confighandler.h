@@ -24,9 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <memory>
 
+#include "lingmoscreen_qmlplugins_export.h"
+
 class OutputModel;
 
-class ConfigHandler : public QObject
+class LINGMOSCREEN_QMLPLUGINS_EXPORT ConfigHandler : public QObject
 {
     Q_OBJECT
 public:

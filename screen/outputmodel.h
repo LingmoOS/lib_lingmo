@@ -25,9 +25,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <QAbstractListModel>
 #include <QPoint>
 
+#include "lingmoscreen_qmlplugins_export.h"
+
 class ConfigHandler;
 
-class OutputModel : public QAbstractListModel
+class  LINGMOSCREEN_QMLPLUGINS_EXPORT OutputModel : public QAbstractListModel
 {
     Q_OBJECT
 
