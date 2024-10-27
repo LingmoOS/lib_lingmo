@@ -54,3 +54,6 @@ compile_commands.json
 build/*
 
 /.cache/
+
+#Ignore doxygen build dir
+/liblingmo_res/
