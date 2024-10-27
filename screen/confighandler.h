@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef CONFIGHANDLER_H
 #define CONFIGHANDLER_H
 
-#include "./common/control.h"
+#include "common/control.h"
 
 #include <kscreen/config.h>
 
