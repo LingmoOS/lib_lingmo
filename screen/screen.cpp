@@ -1,3 +1,4 @@
+#define LOG_TAG "Screen::Screen"
 #include "screen.h"
 #include "outputmodel.h"
 #include "confighandler.h"
@@ -9,9 +10,12 @@
 #include <QQmlEngine>
 #include <QQmlExtensionPlugin>
 
+#include "elog.h"
+
 Screen::Screen(QObject* parent)
     : QObject(parent)
 {
+    log_d("Initializing screen Object");
     load();
 }
 
@@ -23,10 +27,13 @@ void Screen::load()
     // gracefully cleaning up the QML side and only then we will delete it.
     auto* oldConfig = m_config.release();
     if (oldConfig) {
+        log_d("Deleting old config");
         emit outputModelChanged();
         delete oldConfig;
     }
 
+    // Create a new config handler and connect it to the outputModelChanged
+    log_d("Creating new config");
     m_config.reset(new ConfigHandler(this));
     connect(m_config.get(), &ConfigHandler::outputModelChanged, this, &Screen::outputModelChanged);
 
@@ -58,15 +65,19 @@ void Screen::save()
 OutputModel* Screen::outputModel() const
 {
     if (!m_config) {
+        log_e("Config not ready");
         return nullptr;
     }
 
+    log_d("Returning outputModel");
     return m_config->outputModel();
 }
 
 void Screen::configReady(KScreen::ConfigOperation* op)
 {
+    log_d("Config ready from KScreen");
     if (op->hasError()) {
+        log_e("Error getting config from KScreen: %s", qPrintable(op->errorString()));
         m_config.reset();
         return;
     }

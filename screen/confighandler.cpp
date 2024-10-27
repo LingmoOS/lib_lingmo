@@ -14,6 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
+#define LOG_TAG "Screen:ConfigHandler"
 
 #include "confighandler.h"
 
@@ -26,15 +27,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <QRect>
 #include <QDebug>
 
+#include "elog.h"
+
 using namespace KScreen;
 
 ConfigHandler::ConfigHandler(QObject *parent)
     : QObject(parent)
 {
+    log_d("Initializing ConfigHandler");
 }
 
 void ConfigHandler::setConfig(KScreen::ConfigPtr config)
 {
+    log_d("Setting config");
     m_config = config;
     m_initialConfig = m_config->clone();
     m_initialControl.reset(new ControlConfig(m_initialConfig));
@@ -72,6 +77,7 @@ void ConfigHandler::setConfig(KScreen::ConfigPtr config)
 
 void ConfigHandler::resetScale(const KScreen::OutputPtr &output)
 {
+    log_d("Resetting scale for output");
     // Load scale control (either not set, same or windowing system does not transmit scale).
     const qreal scale = m_control->getScale(output);
     if (scale > 0) {
@@ -87,6 +93,7 @@ void ConfigHandler::resetScale(const KScreen::OutputPtr &output)
 
 void ConfigHandler::initOutput(const KScreen::OutputPtr &output)
 {
+    log_d("Initializing output");
     if (output->isConnected()) {
         resetScale(output);
         m_outputs->add(output);
@@ -98,6 +105,7 @@ void ConfigHandler::initOutput(const KScreen::OutputPtr &output)
 
 void ConfigHandler::updateInitialData()
 {
+    log_d("Updating initial data");
     m_initialRetention = getRetention();
     connect(new GetConfigOperation(), &GetConfigOperation::finished, this, [this](ConfigOperation *op) {
         if (op->hasError()) {
@@ -114,6 +122,7 @@ void ConfigHandler::updateInitialData()
 
 void ConfigHandler::checkNeedsSave()
 {
+    log_d("Checking if config needs save");
     if (m_config->supportedFeatures() & KScreen::Config::Feature::PrimaryDisplay) {
         if (m_config->primaryOutput() && m_initialConfig->primaryOutput()) {
             if (m_config->primaryOutput()->hashMd5() != m_initialConfig->primaryOutput()->hashMd5()) {

@@ -22,7 +22,7 @@ add_custom_command(
     COMMAND mkdir -p /tmp${CMAKE_CURRENT_BINARY_DIR}/Lingmo/Logger && ln -svf ${CMAKE_CURRENT_BINARY_DIR}/*.so /tmp${CMAKE_CURRENT_BINARY_DIR}/Lingmo/Logger 
     COMMAND cp -v ${CMAKE_CURRENT_SOURCE_DIR}/qmldir /tmp${CMAKE_CURRENT_BINARY_DIR}/Lingmo/Logger
     COMMAND ${QMLPLUGINDUMP_EXECUTABLE} -noinstantiate -nonrelocatable ${PLUGIN_NAME} ${PLUGIN_VERSION} /tmp${CMAKE_CURRENT_BINARY_DIR} > ${PLUGIN_QMLTYPES_PATH}
-    COMMAND rm -rfv /tmp${CMAKE_CURRENT_BINARY_DIR}/Lingmo
+    COMMAND rm -rfv /tmp${CMAKE_CURRENT_BINARY_DIR}/Lingmo/Logger
     DEPENDS lingmologger_qmlplugins
 )
 

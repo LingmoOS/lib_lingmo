@@ -11,7 +11,7 @@ class QmlPlugins : public QQmlExtensionPlugin
 
 public:
     void registerTypes(const char * uri) override {
-        qmlRegisterAnonymousType<OutputModel>("Lingmo.Screen", 1);
+        qmlRegisterAnonymousType<OutputModel>(uri, 1);
         qmlRegisterType<Screen>(uri, 1, 0, "Screen");
         qmlRegisterType<KScreen::Output>(uri, 1, 0, "Output");
     }
