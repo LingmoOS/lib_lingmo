@@ -82,9 +82,7 @@ NetworkModelItem::NetworkModelItem(const NetworkModelItem *item, QObject *parent
 {
 }
 
-NetworkModelItem::~NetworkModelItem()
-{
-}
+NetworkModelItem::~NetworkModelItem() = default;
 
 QString NetworkModelItem::activeConnectionPath() const
 {

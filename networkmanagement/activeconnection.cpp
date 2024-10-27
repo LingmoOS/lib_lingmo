@@ -19,12 +19,19 @@
 
 #include "activeconnection.h"
 
-ActiveConnection::ActiveConnection(QObject *parent)
+ActiveConnection::ActiveConnection(QObject* parent)
     : QObject(parent)
     , m_wirelessNetwork(nullptr)
 {
     statusChanged(NetworkManager::status());
     connect(NetworkManager::notifier(), &NetworkManager::Notifier::statusChanged, this, &ActiveConnection::statusChanged);
+}
+
+ActiveConnection::~ActiveConnection()
+{
+    if (!m_wirelessNetwork.isNull()) {
+        m_wirelessNetwork->deleteLater();
+    }
 }
 
 void ActiveConnection::statusChanged(NetworkManager::Status status)
@@ -67,7 +74,7 @@ void ActiveConnection::updateWirelessIcon(NetworkManager::Device::Ptr device)
     if (m_wirelessNetwork) {
         updateWirelessIconForSignalStrength(m_wirelessNetwork->signalStrength());
         connect(m_wirelessNetwork.data(), &NetworkManager::WirelessNetwork::signalStrengthChanged,
-                this, &ActiveConnection::updateWirelessIconForSignalStrength, Qt::UniqueConnection);
+            this, &ActiveConnection::updateWirelessIconForSignalStrength, Qt::UniqueConnection);
     }
 }
 

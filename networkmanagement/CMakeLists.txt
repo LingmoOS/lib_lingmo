@@ -48,6 +48,8 @@ find_package(KF5ModemManagerQt REQUIRED)
 add_library(lingmonm_qmlplugins SHARED ${NETWORKMGR_SRCS})
 generate_export_header(lingmonm_qmlplugins EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/networkmanager_export.h BASE_NAME NetworkManager)
 
+target_include_directories(lingmonm_qmlplugins PUBLIC ${CMAKE_SOURCE_DIR}/easylogger)
+
 target_link_libraries (lingmonm_qmlplugins
     Qt5::Core
     Qt5::Quick
@@ -56,6 +58,8 @@ target_link_libraries (lingmonm_qmlplugins
 
     KF5::NetworkManagerQt
     KF5::ModemManagerQt
+
+    LingmoLogger
 )
 
 install(TARGETS lingmonm_qmlplugins DESTINATION ${INSTALL_QMLDIR}/Lingmo/NetworkManagement)

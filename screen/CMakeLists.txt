@@ -27,5 +27,8 @@ target_link_libraries (lingmoscreen_qmlplugins
     KF5::KIOCore
 )
 
-install(TARGETS lingmoscreen_qmlplugins DESTINATION ${INSTALL_QMLDIR}/Lingmo/Screen)
-install(FILES qmldir DESTINATION ${INSTALL_QMLDIR}/Lingmo/Screen)
+set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/LibLingmo/Screen")
+
+install(TARGETS lingmoscreen_qmlplugins EXPORT LingmoScreenTargets DESTINATION ${INSTALL_QMLDIR}/Lingmo/Screen COMPONENT Screen)
+install(FILES qmldir DESTINATION ${INSTALL_QMLDIR}/Lingmo/Screen COMPONENT Screen)
+install(EXPORT LingmoScreenTargets DESTINATION ${CMAKECONFIG_INSTALL_DIR} COMPONENT Screen)

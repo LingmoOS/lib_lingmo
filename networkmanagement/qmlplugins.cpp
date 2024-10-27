@@ -15,6 +15,7 @@
 
 void QmlPlugins::registerTypes(const char* uri)
 {
+    // @uri Lingmo.NetworkManagement
     qmlRegisterUncreatableType<NetworkModelItem>(uri, 1, 0, "NetworkModelItem",
                                                 QLatin1String("Cannot instantiate NetworkModelItem"));
     qmlRegisterType<ActiveConnection>(uri, 1, 0, "ActiveConnection");

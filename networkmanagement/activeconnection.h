@@ -36,6 +36,8 @@ class ActiveConnection : public QObject
 public:
     explicit ActiveConnection(QObject *parent = nullptr);
 
+    ~ActiveConnection();
+
     QString wirelessName() { return m_wirelessName; }
     QString wirelessIcon() { return m_wirelessIcon; }
 

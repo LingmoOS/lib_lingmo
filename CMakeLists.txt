@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.5)
 
 project(liblingmo)
 
+set(LIBLINGMO_VERSION_MAJOR 1)
+set(LIBLINGMO_VERSION_MINOR 0)
+set(LIBLINGMO_VERSION_PATCH 0)
+set(LIBLINGMO_VERSION ${LIBLINGMO_VERSION_MAJOR}.${LIBLINGMO_VERSION_MINOR}.${LIBLINGMO_VERSION_PATCH})
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -34,6 +39,7 @@ else()
     message(FATAL_ERROR "qml directory cannot be detected.")
 endif()
 # -------------------------------------------
+add_subdirectory(easylogger)
 add_subdirectory(accounts)
 add_subdirectory(bluez)
 add_subdirectory(mpris)
@@ -41,4 +47,32 @@ add_subdirectory(networkmanagement)
 add_subdirectory(screen)
 add_subdirectory(system)
 add_subdirectory(audio)
-add_subdirectory(easylogger)
+
+# Install CMake library files
+
+set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/LibLingmo")
+
+configure_package_config_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/LibLingmoConfig.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/LibLingmoConfig.cmake"
+        INSTALL_DESTINATION
+        "${CMAKECONFIG_INSTALL_DIR}"
+        PATH_VARS
+        CMAKECONFIG_INSTALL_DIR CMAKE_INSTALL_PREFIX
+)
+
+write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/LibLingmoConfigVersion.cmake
+        VERSION ${LIBLINGMO_VERSION}
+        COMPATIBILITY AnyNewerVersion
+)
+
+install(
+        FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/LibLingmoConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/LibLingmoConfigVersion.cmake"
+        DESTINATION
+        "${CMAKECONFIG_INSTALL_DIR}"
+        COMPONENT
+        Devel
+)
