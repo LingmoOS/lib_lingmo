@@ -36,7 +36,7 @@ install(TARGETS LingmoLogger
 )
 
 
-set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/LingmoLogger")
+set(CMAKECONFIG_INSTALL_DIR "lib/cmake/LingmoLogger")
 
 configure_package_config_file(
         "${CMAKE_CURRENT_SOURCE_DIR}/LingmoLoggerConfig.cmake.in"

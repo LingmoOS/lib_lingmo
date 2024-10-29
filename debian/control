@@ -28,3 +28,9 @@ Depends: ${misc:Depends},
          ${shlibs:Depends},
          libkf5screen-bin
 Description: LingmoOS Library
+
+
+Package: liblingmo-dev
+Architecture: any
+Depends: liblingmo (= ${binary:Version}), ${misc:Depends}, ${shlib:Depends}, ${dist:Depends}
+Description: Development files for liblingmo

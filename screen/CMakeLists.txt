@@ -57,7 +57,7 @@ add_custom_command(
 # Add a custom target to ensure the command is run
 add_custom_target(generate_qmltypes_lingmoscreen ALL DEPENDS ${PLUGIN_QMLTYPES_PATH})
 
-set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/LibLingmo/Screen")
+set(CMAKECONFIG_INSTALL_DIR "lib/cmake/LibLingmo/Screen")
 
 include(GNUInstallDirs)
 

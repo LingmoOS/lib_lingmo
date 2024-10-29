@@ -50,7 +50,7 @@ add_subdirectory(audio)
 
 # Install CMake library files
 
-set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/LibLingmo")
+set(CMAKECONFIG_INSTALL_DIR "lib/cmake/LibLingmo")
 
 configure_package_config_file(
         "${CMAKE_CURRENT_SOURCE_DIR}/LibLingmoConfig.cmake.in"
