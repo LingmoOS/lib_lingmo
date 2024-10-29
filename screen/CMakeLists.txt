@@ -22,7 +22,7 @@ add_library(lingmoscreen_qmlplugins SHARED ${SCREEN_SRCS})
 
 generate_export_header(lingmoscreen_qmlplugins)
 
-target_include_directories(lingmoscreen_qmlplugins PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR/easylogger})
+target_include_directories(lingmoscreen_qmlplugins PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/easylogger)
 
 target_link_libraries (lingmoscreen_qmlplugins
     Qt5::Core
