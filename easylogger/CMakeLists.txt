@@ -18,7 +18,7 @@ endforeach()
 
 add_library(LingmoLogger SHARED ${SRCS})
 
-list(APPEND PUBLIC_HEADER "elog.h" "elog_cfg.h")
+list(APPEND PUBLIC_HEADER "elog.h" "elog_cfg.h" "elog_file.h" "elog_file_cfg.h")
 set_target_properties(LingmoLogger  PROPERTIES 
         PUBLIC_HEADER "${PUBLIC_HEADER}"
         VERSION ${LIB_VERSION}
