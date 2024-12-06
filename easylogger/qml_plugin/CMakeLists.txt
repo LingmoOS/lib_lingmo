@@ -6,32 +6,26 @@ foreach(filepath ${SRCS_R})
     list(APPEND SRCS ${filename})
 endforeach()
 
-add_library(lingmologger_qmlplugins SHARED ${SRCS})
+# Create Qt6 library target
+qt_add_library(lingmologger_qmlplugins SHARED)
 
 target_link_libraries(lingmologger_qmlplugins PRIVATE LingmoLogger Qt6::Core Qt6::Quick Qt6::Gui)
 
 target_include_directories(lingmologger_qmlplugins PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
-# qmlplugindump
-find_program(QMLPLUGINDUMP_EXECUTABLE qmlplugindump)
-set(PLUGIN_NAME "Lingmo.Logger")
-set(PLUGIN_VERSION "1.0")
-set(PLUGIN_QMLTYPES_PATH ${CMAKE_CURRENT_BINARY_DIR}/plugin.qmltypes)
-
-# Create a custom command to generate the .qmltypes file
-add_custom_command(
-    OUTPUT ${PLUGIN_QMLTYPES_PATH}
-    COMMAND mkdir -p /tmp${CMAKE_CURRENT_BINARY_DIR}/Lingmo/Logger && ln -svf ${CMAKE_CURRENT_BINARY_DIR}/*.so /tmp${CMAKE_CURRENT_BINARY_DIR}/Lingmo/Logger 
-    COMMAND cp -v ${CMAKE_CURRENT_SOURCE_DIR}/qmldir /tmp${CMAKE_CURRENT_BINARY_DIR}/Lingmo/Logger
-    COMMAND ${QMLPLUGINDUMP_EXECUTABLE} -noinstantiate -nonrelocatable ${PLUGIN_NAME} ${PLUGIN_VERSION} /tmp${CMAKE_CURRENT_BINARY_DIR} > ${PLUGIN_QMLTYPES_PATH}
-    COMMAND rm -rfv /tmp${CMAKE_CURRENT_BINARY_DIR}/Lingmo
-    DEPENDS lingmologger_qmlplugins
+qt_add_qml_module(lingmologger_qmlplugins
+    PLUGIN_TARGET lingmologger_qmlplugins
+    OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/temp/Lingmo/Logger
+    VERSION "1.0"
+    URI "Lingmo.Logger"
+    TYPEINFO "plugins.qmltypes"
+    SOURCES ${SRCS}
+    RESOURCE_PREFIX "/lingmo/logger"
 )
 
-# Add a custom target to ensure the command is run
-add_custom_target(generate_qmltypes ALL DEPENDS ${PLUGIN_QMLTYPES_PATH})
-
+set_target_properties(lingmologger_qmlplugins
+    PROPERTIES  VERSION 1.0.0 SOVERSION 1)
 
 # Install QML Plugins
-install(TARGETS lingmologger_qmlplugins DESTINATION ${INSTALL_QMLDIR}/Lingmo/Logger)
-install(FILES qmldir ${PLUGIN_QMLTYPES_PATH} DESTINATION ${INSTALL_QMLDIR}/Lingmo/Logger)
+install(DIRECTORY ${CMAKE_BINARY_DIR}/temp/Lingmo/Logger DESTINATION ${INSTALL_QMLDIR}/Lingmo)
+generate_export_header(lingmologger_qmlplugins BASE_NAME lingmologger_qmlplugins)
