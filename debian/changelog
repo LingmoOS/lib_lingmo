@@ -4,6 +4,12 @@ liblingmo (2.0.0-1~dev1) UNRELEASED; urgency=high
 
  -- LingmoOS Packaging Team <lingmo@lingmo.org>  Mon, 02 Jul 2024 19:21:00 +0800
 
+liblingmo (1.10.0) experimental; urgency=high
+
+  * Added LingmoLogger Plugin [Elysia]
+
+ -- Lingmo DE Team <team@lingmo.org>  Wed, 23 Oct 2024 17:38:21 +0800
+
 liblingmo (1.9.10) UNRELEASED; urgency=high
 
   * Fixed Screen Plugin (Elysia) <c.elysia@foxmail.com>
