@@ -1,7 +1,7 @@
 Source: liblingmo
 Section: devel
 Priority: optional
-Maintainer: LingmoOS <lingmo@lingmo.org>
+Maintainer: Lingmo DE Develop Team <team@lingmo.org>
 Build-Depends: cmake,
                debhelper (>= 11),
                extra-cmake-modules,
@@ -28,4 +28,4 @@ Package: liblingmo
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends}
-Description: LingmoOS Library
+Description: Lingmo DE Core Library
