@@ -2,22 +2,19 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, qt5 ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, qt5 ]
   workflow_dispatch:
 
 jobs:
   debian:
     name: Debian
     runs-on: ubuntu-latest
-    container: docker.io/library/debian:sid
+    container: docker.io/library/debian:trixie
     steps:
     - name: Checkout Source
       uses: actions/checkout@v4
-
-    - name: Add Debian experiment repository
-      run: echo "deb http://deb.debian.org/debian experimental main contrib non-free non-free-firmware" > /etc/apt/sources.list.d/experimental.list
 
     - name: Update repository
       run: apt-get update -y
@@ -29,4 +26,4 @@ jobs:
       run: mk-build-deps -i -t "apt-get --yes" -r
 
     - name: Build Package
-      run: dpkg-buildpackage -b -uc -us -j1
+      run: dpkg-buildpackage -b -uc -us -j$(nproc)

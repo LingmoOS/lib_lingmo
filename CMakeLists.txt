@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.15)
 
 project(liblingmo)
 
@@ -18,7 +18,7 @@ include(CMakePackageConfigHelpers)
 set(QT Core Gui Quick QuickControls2 Widgets DBus Xml Concurrent)
 find_package(Qt6 REQUIRED ${QT})
 
-find_package(ECM 5.93 REQUIRED NO_MODULE)
+find_package(ECM 6 REQUIRED NO_MODULE)
 list(APPEND CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 # Get the installation directory from qmake
