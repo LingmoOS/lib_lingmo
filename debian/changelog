@@ -1,4 +1,4 @@
-liblingmo (2.0.0-1~dev1) UNRELEASED; urgency=high
+liblingmo (2.0.1) UNRELEASED; urgency=high
 
   * Migrated to Qt6 and C++ 17 (Elysia) <c.elysia@foxmail.com>
 
