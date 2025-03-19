@@ -30,24 +30,23 @@
 #include <QWaitCondition>
 #include <queue>
 #endif
-#include <QMutex>
 #include <QDateTime>
 #include <QLatin1String>
+#include <QMutex>
 #include <QtGlobal>
+#include <algorithm>
 #include <cstdlib>
 #include <stdexcept>
-#include <algorithm>
 #include <vector>
 
-namespace QsLogging
-{
+
+namespace QsLogging {
 using DestinationList = std::vector<DestinationPtrU>;
 
 #ifdef QS_LOG_SEPARATE_THREAD
 //! Messages can be enqueued from other threads and will be logged one by one.
 //! Note: std::queue was used instead of QQueue because it accepts types missing operator=.
-class LoggerThread : public QThread
-{
+class LoggerThread : public QThread {
 public:
     void enqueue(const LogMessage& message)
     {
@@ -89,9 +88,7 @@ private:
 };
 #endif
 
-
-class LoggerImpl
-{
+class LoggerImpl {
 public:
     LoggerImpl();
     ~LoggerImpl();
@@ -144,7 +141,6 @@ bool LoggerImpl::shutDownLoggerThread()
     return loggerThread.wait();
 }
 #endif
-
 
 Logger& Logger::instance()
 {
@@ -205,11 +201,11 @@ void Logger::addDestination(Destination* destination)
     addDestination(DestinationPtrU(destination));
 }
 
-DestinationPtrU Logger::removeDestination(const QString &type)
+DestinationPtrU Logger::removeDestination(const QString& type)
 {
     QMutexLocker lock(&d->logMutex);
 
-    const auto it = std::find_if(d->destList.begin(), d->destList.end(), [&type](const DestinationPtrU& dest){
+    const auto it = std::find_if(d->destList.begin(), d->destList.end(), [&type](const DestinationPtrU& dest) {
         return dest->type() == type;
     });
 
@@ -251,7 +247,6 @@ Logger::Helper::~Helper() noexcept
     Logger::instance().enqueueWrite(msg);
 }
 
-
 Logger::Logger()
     : d(new LoggerImpl)
 {
@@ -276,6 +271,56 @@ void Logger::write(const LogMessage& message)
     for (auto& dest : d->destList) {
         dest->write(message);
     }
+}
+
+void Logger::log_trace(const QString& message)
+{
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::TraceLevel) {
+    } else
+        QsLogging::Logger::Helper(QsLogging::TraceLevel).stream() << message;
+}
+void Logger::log_debug(const QString& message)
+{
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::DebugLevel) {
+    } else
+        QsLogging::Logger::Helper(QsLogging::DebugLevel).stream() << message;
+}
+void Logger::log_info(const QString& message)
+{
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::InfoLevel) {
+    } else
+        QsLogging::Logger::Helper(QsLogging::InfoLevel).stream() << message;
+}
+void Logger::log_warn(const QString& message)
+{
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::WarnLevel) {
+    } else
+        QsLogging::Logger::Helper(QsLogging::WarnLevel).stream() << message;
+}
+void Logger::log_error(const QString& message)
+{
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::ErrorLevel) {
+    } else
+        QsLogging::Logger::Helper(QsLogging::ErrorLevel).stream() << message;
+}
+void Logger::log_fatal(const QString& message)
+{
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::FatalLevel) {
+    } else
+        QsLogging::Logger::Helper(QsLogging::FatalLevel).stream() << message;
+}
+
+void Logger::registerFileDestination(const QString& sLogPath, int enableLogRotation, int sizeInBytesToRotateAfter, int oldLogsToKeep)
+{
+    Logger& logger = Logger::instance();
+    logger.addDestination(DestinationFactory::MakeFileDestination(
+        sLogPath, static_cast<LogRotationOption>(enableLogRotation), MaxSizeBytes(sizeInBytesToRotateAfter), MaxOldLogCount(oldLogsToKeep)));
+}
+
+void Logger::registerDebugDestination()
+{
+    Logger& logger = Logger::instance();
+    logger.addDestination(DestinationFactory::MakeDebugOutputDestination());
 }
 
 } // end namespace

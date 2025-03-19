@@ -32,7 +32,6 @@
 #include "QsLogSharedLibrary.h"
 #include "QsLogVersion.h"
 
-
 #include <QDebug>
 #include <QObject>
 #include <QQmlEngine>
@@ -75,13 +74,13 @@ public:
 
     //! For QML compatibility, the ownership of the destination is transferred to the logger
     // after this call.
-    Q_INVOKABLE void addDestination(Destination* destination);
+    void addDestination(Destination* destination);
 
     //! Removes and returns a previously added destination. Returns null if not found.
-    Q_INVOKABLE DestinationPtrU removeDestination(const QString& type);
+    DestinationPtrU removeDestination(const QString& type);
 
     //! Checks if a destination of a specific type has been added. Pass T::Type as parameter.
-    Q_INVOKABLE bool hasDestinationOfType(const char* type) const;
+    bool hasDestinationOfType(const char* type) const;
 
     //! Messages at a level < 'newLevel' will be ignored
     Q_INVOKABLE void setLoggingLevel(Level newLevel);
@@ -106,6 +105,19 @@ public:
         QString buffer;
         QDebug qtDebug;
     };
+
+    //! Easy functions for QML! Only support strings for now.
+    Q_INVOKABLE void log_trace(const QString& message);
+    Q_INVOKABLE void log_debug(const QString& message);
+    Q_INVOKABLE void log_info(const QString& message);
+    Q_INVOKABLE void log_warn(const QString& message);
+    Q_INVOKABLE void log_error(const QString& message);
+    Q_INVOKABLE void log_fatal(const QString& message);
+
+    //! Helpers function for registering Destinations in QML.
+    Q_INVOKABLE void registerFileDestination(const QString& sLogPath, int enableLogRotation = 1, int sizeInBytesToRotateAfter = 512, int oldLogsToKeep = 2);
+
+    Q_INVOKABLE void registerDebugDestination();
 
 private:
     Logger();
