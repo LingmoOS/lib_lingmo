@@ -1,3 +1,10 @@
+liblingmo (2.1.0) UNRELEASED; urgency=high
+
+  * BREAKING CHANGE: remove easylogger module and related files
+  * feat: added a new plugin: LingmoLogger
+
+ -- Lingmo DE Develop Team <team@lingmo.org>  Wed, 19 Mar 2025 23:28:05 +0800
+
 liblingmo (2.0.1) UNRELEASED; urgency=high
 
   * Migrated to Qt6 and C++ 17 (Elysia) <c.elysia@foxmail.com>
