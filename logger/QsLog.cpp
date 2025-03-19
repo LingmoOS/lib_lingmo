@@ -39,7 +39,6 @@
 #include <stdexcept>
 #include <vector>
 
-
 namespace QsLogging {
 using DestinationList = std::vector<DestinationPtrU>;
 
@@ -141,6 +140,13 @@ bool LoggerImpl::shutDownLoggerThread()
     return loggerThread.wait();
 }
 #endif
+
+Logger::Logger(QObject* parent)
+    : QObject(parent)
+    , d(new LoggerImpl)
+{
+    qRegisterMetaType<LogMessage>("QsLogging::LogMessage");
+};
 
 Logger& Logger::instance()
 {
@@ -245,12 +251,6 @@ Logger::Helper::~Helper() noexcept
 {
     const LogMessage msg(buffer, QDateTime::currentDateTimeUtc(), level);
     Logger::instance().enqueueWrite(msg);
-}
-
-Logger::Logger()
-    : d(new LoggerImpl)
-{
-    qRegisterMetaType<LogMessage>("QsLogging::LogMessage");
 }
 
 //! directs the message to the task queue or writes it directly

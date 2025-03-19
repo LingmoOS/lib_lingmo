@@ -37,6 +37,7 @@
 #include <QQmlEngine>
 #include <QString>
 #include <memory>
+#include <qobject.h>
 
 namespace QsLogging {
 
@@ -120,7 +121,7 @@ public:
     Q_INVOKABLE void registerDebugDestination();
 
 private:
-    Logger();
+    Logger(QObject* parent = nullptr);
 
     void enqueueWrite(const LogMessage& message);
     void write(const LogMessage& message);
