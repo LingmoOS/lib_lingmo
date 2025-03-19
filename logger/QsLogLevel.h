@@ -25,12 +25,13 @@
 
 #ifndef QSLOGLEVEL_H
 #define QSLOGLEVEL_H
+#include <QObject>
+#include <QQmlEngine>
+
 class QString;
 
-namespace QsLogging
-{
-enum Level
-{
+namespace QsLogging {
+enum Level {
     TraceLevel = 0,
     DebugLevel,
     InfoLevel,
@@ -39,10 +40,16 @@ enum Level
     FatalLevel,
     OffLevel
 };
-
 const char* LevelName(Level theLevel);
 QString LocalizedLevelName(Level theLevel);
 
+}
+
+namespace QsLogging::LogLevel {
+Q_NAMESPACE
+typedef QsLogging::Level Level ;
+Q_ENUM_NS(Level)
+QML_NAMED_ELEMENT(LogLevel)
 }
 
 #endif // QSLOGLEVEL_H
