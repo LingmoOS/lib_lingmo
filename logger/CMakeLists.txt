@@ -105,7 +105,7 @@ target_link_libraries(LingmoLogger Qt6::Core ${ADDITIONAL_LIBRARIES})
 install(FILES ${HEADER_FILES} DESTINATION include/LingmoLogger)
 QsLog_install_target(LingmoLogger "")
 
-option(QS_LOG_BUILD_TESTS "Build unit tests" ON)
+option(QS_LOG_BUILD_TESTS "Build unit tests" OFF)
 if(QS_LOG_BUILD_TESTS)
 	add_subdirectory(unittest)
 endif()
