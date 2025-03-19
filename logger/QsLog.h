@@ -29,11 +29,12 @@
 #include "QsLogLevel.h"
 #include "QsLogMessage.h"
 #include "QsLogSharedLibrary.h"
+#include "QsLogVersion.h"
+
 #include <QDebug>
 #include <QString>
 #include <memory>
 
-#define QS_LOG_VERSION "2.1"
 
 namespace QsLogging
 {

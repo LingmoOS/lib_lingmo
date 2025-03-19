@@ -1,7 +1,13 @@
 # CMake build support courtesy of Axel Gembe <axel@gembe.net>
 cmake_minimum_required(VERSION 3.15)
 
-project(LingmoLogger)
+set(LIB_VERSION_MAJOR 2)
+set(LIB_VERSION_MINOR 2)
+set(LIB_VERSION_PATCH 0)
+set(LIB_VERSION ${LIB_VERSION_MAJOR}.${LIB_VERSION_MINOR}.${LIB_VERSION_PATCH})
+
+project(LingmoLogger VERSION ${LIB_VERSION})
+
 
 # Add CMake modules
 set(CMAKE_MODULE_PATH
@@ -21,11 +27,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # As moc files are generated in the binary dir, tell to always look for includes there
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 # Specify build paths
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+
+# Generate version file
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/QsLogVersion.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/QsLogVersion.h"
+)
 
 set(HEADER_FILES
 	QsLog.h
@@ -37,6 +50,7 @@ set(HEADER_FILES
 	QsLogLevel.h
 	QsLogMessage.h
 	QsLogSharedLibrary.h
+	"${CMAKE_CURRENT_BINARY_DIR}/QsLogVersion.h"
     )
 
 set(SOURCE_FILES
@@ -102,8 +116,51 @@ add_library(LingmoLogger ${QS_LOG_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} 
 
 target_link_libraries(LingmoLogger Qt6::Core ${ADDITIONAL_LIBRARIES})
 
-install(FILES ${HEADER_FILES} DESTINATION include/LingmoLogger)
-QsLog_install_target(LingmoLogger "")
+set_target_properties(LingmoLogger  PROPERTIES 
+        PUBLIC_HEADER "${HEADER_FILES}"
+        VERSION ${LIB_VERSION}
+        SOVERSION ${LIB_VERSION_MAJOR}
+)
+
+install(TARGETS LingmoLogger
+        EXPORT  LingmoLoggerTargets
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin
+        PUBLIC_HEADER DESTINATION include/LingmoLogger
+)
+
+set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/LingmoLogger")
+
+configure_package_config_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/LingmoLoggerConfig.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/LingmoLoggerConfig.cmake"
+        INSTALL_DESTINATION
+        "${CMAKECONFIG_INSTALL_DIR}"
+        PATH_VARS
+        CMAKECONFIG_INSTALL_DIR CMAKE_INSTALL_PREFIX
+)
+
+write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/LingmoLoggerConfigVersion.cmake
+        VERSION ${LIB_VERSION}
+        COMPATIBILITY AnyNewerVersion
+)
+
+install(
+        FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/LingmoLoggerConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/LingmoLoggerConfigVersion.cmake"
+        DESTINATION
+        "${CMAKECONFIG_INSTALL_DIR}"
+        COMPONENT
+        Devel
+)
+
+install(EXPORT LingmoLoggerTargets
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        FILE LingmoLoggerTargets.cmake
+)
 
 option(QS_LOG_BUILD_TESTS "Build unit tests" OFF)
 if(QS_LOG_BUILD_TESTS)
