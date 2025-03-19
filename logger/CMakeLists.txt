@@ -15,7 +15,7 @@ set(CMAKE_MODULE_PATH
     "${CMAKE_MODULE_PATH}"
 )
 
-include(QsLogConfigTargets)
+#include(QsLogConfigTargets)
 
 # Add a _d to debug binaries
 set(CMAKE_DEBUG_POSTFIX "_d")
@@ -141,8 +141,9 @@ install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/temp/Lingmo/Logger DESTINATION ${I
 
 install(TARGETS LingmoLogger
         EXPORT  LingmoLoggerTargets
-        PUBLIC_HEADER DESTINATION include/LingmoLogger
 )
+
+install(FILES ${HEADER_FILES} DESTINATION ${INSTALL_INCLUDEDIR}/LingmoLogger)
 
 set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/LingmoLogger")
 
