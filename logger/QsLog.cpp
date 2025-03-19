@@ -150,7 +150,11 @@ Logger::Logger(QObject* parent)
 
 Logger& Logger::instance()
 {
-    static Logger instance;
+    return *instancePtr();
+}
+Logger* Logger::instancePtr()
+{
+    static Logger* instance = new Logger();
     return instance;
 }
 

@@ -38,6 +38,7 @@
 #include <QString>
 #include <memory>
 #include <qobject.h>
+#include <qtpreprocessorsupport.h>
 
 namespace QsLogging {
 
@@ -49,10 +50,16 @@ class QSLOG_SHARED_OBJECT Logger : public QObject {
     QML_NAMED_ELEMENT(Logger)
 
 public:
+    static Logger* instancePtr();
     static Logger& instance();
     static Level levelFromLogMessage(const QString& logMessage, bool* conversionSucceeded = 0);
 
-    static Logger* create(QQmlEngine*, QJSEngine*) { return &instance(); };
+    static Logger* create(QQmlEngine* x, QJSEngine* y)
+    {
+        Q_UNUSED(x);
+        Q_UNUSED(y);
+        return instancePtr();
+    };
 
 public:
     Logger(const Logger&) = delete;
