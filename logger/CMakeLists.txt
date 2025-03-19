@@ -25,6 +25,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(Qt6 COMPONENTS Core Qml REQUIRED)
+
 # As moc files are generated in the binary dir, tell to always look for includes there
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -112,9 +114,11 @@ if(QS_LOG_BUILD_WINDOW)
     add_definitions(-DQS_LOG_WINDOW)
 endif()
 
-add_library(LingmoLogger ${QS_LOG_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${UI_SOURCE_FILES} ${RES_SOURCE_FILES})
+qt_add_library(LingmoLogger ${QS_LOG_LIBRARY_TYPE})
 
-target_link_libraries(LingmoLogger Qt6::Core ${ADDITIONAL_LIBRARIES})
+# add_library(LingmoLogger ${QS_LOG_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${UI_SOURCE_FILES} ${RES_SOURCE_FILES})
+
+target_link_libraries(LingmoLogger PRIVATE Qt6::Core Qt6::Qml ${ADDITIONAL_LIBRARIES})
 
 set_target_properties(LingmoLogger  PROPERTIES 
         PUBLIC_HEADER "${HEADER_FILES}"
@@ -122,11 +126,21 @@ set_target_properties(LingmoLogger  PROPERTIES
         SOVERSION ${LIB_VERSION_MAJOR}
 )
 
+qt_add_qml_module(LingmoLogger
+    PLUGIN_TARGET LingmoLogger
+    OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/temp/Lingmo/Logger
+    VERSION "1.0"
+    URI "Lingmo.Logger"
+    TYPEINFO "plugins.qmltypes"
+    SOURCES ${HEADER_FILES} ${SOURCE_FILES} ${UI_SOURCE_FILES} ${RES_SOURCE_FILES}
+    RESOURCE_PREFIX "/lingmo/logger"
+)
+
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/temp/Lingmo/Logger DESTINATION ${INSTALL_QMLDIR}/Lingmo)
+
 install(TARGETS LingmoLogger
         EXPORT  LingmoLoggerTargets
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        RUNTIME DESTINATION bin
         PUBLIC_HEADER DESTINATION include/LingmoLogger
 )
 
@@ -162,7 +176,7 @@ install(EXPORT LingmoLoggerTargets
         FILE LingmoLoggerTargets.cmake
 )
 
-option(QS_LOG_BUILD_TESTS "Build unit tests" OFF)
+option(QS_LOG_BUILD_TESTS "Build unit tests" ON)
 if(QS_LOG_BUILD_TESTS)
 	add_subdirectory(unittest)
 endif()

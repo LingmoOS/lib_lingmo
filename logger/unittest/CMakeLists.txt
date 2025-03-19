@@ -26,4 +26,4 @@ set(SOURCE_FILES
 
 add_executable(${PROJECTNAME} ${SOURCE_FILES} ${HEADER_FILES})
 
-target_link_libraries(${PROJECTNAME} LingmoLogger Qt6::Test)
+target_link_libraries(${PROJECTNAME} LingmoLogger Qt6::Test Qt6::Core Qt6::Qml) 

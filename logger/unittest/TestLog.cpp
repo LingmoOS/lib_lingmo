@@ -53,12 +53,10 @@ private slots:
     void testDestinationType();
 
 private:
-    QMutex* _mutex;
 };
 
 void TestLog::initTestCase()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
     QCOMPARE(Logger::instance().loggingLevel(), InfoLevel);
     Logger::instance().setLoggingLevel(TraceLevel);
@@ -67,7 +65,6 @@ void TestLog::initTestCase()
 
 void TestLog::testAllLevels()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
     MockDestinationPtrU mockDest(new MockDestination(destinationName1));
     Logger::instance().addDestination(std::move(mockDest));
@@ -81,7 +78,7 @@ void TestLog::testAllLevels()
     QLOG_FATAL() << "fatal level";
 
     // Wait for the log to finish writing.
-    QThread::msleep(100);
+    QThread::msleep(1000);
 
     mockDest = unique_cast(Logger::instance().removeDestination(destinationName1));
     QCOMPARE(mockDest->messageCount(), 6);
@@ -95,7 +92,6 @@ void TestLog::testAllLevels()
 
 void TestLog::testMessageText()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
     MockDestinationPtrU mockDest(new MockDestination(destinationName1));
     Logger::instance().addDestination(std::move(mockDest));
@@ -105,7 +101,7 @@ void TestLog::testMessageText()
     QLOG_FATAL() << "ruh-roh!";
 
     // Wait for the log to finish writing.
-    QThread::msleep(100);
+    QThread::msleep(1000);
 
     mockDest = unique_cast(Logger::instance().removeDestination(destinationName1));
     QVERIFY(mockDest->hasMessage("foobar", DebugLevel));
@@ -116,7 +112,6 @@ void TestLog::testMessageText()
 
 void TestLog::testLevelChanges()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
     MockDestinationPtrU mockDest1(new MockDestination(destinationName1));
     MockDestinationPtrU mockDest2(new MockDestination(destinationName2));
@@ -145,7 +140,7 @@ void TestLog::testLevelChanges()
     QLOG_FATAL() << "fatal";
 
     // Wait for the log to finish writing.
-    QThread::msleep(100);
+    QThread::msleep(1000);
 
     mockDest1 = unique_cast(Logger::instance().removeDestination(destinationName1));
     mockDest2 = unique_cast(Logger::instance().removeDestination(destinationName2));
@@ -162,7 +157,6 @@ void TestLog::testLevelChanges()
 
 void TestLog::testLevelParsing()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
     MockDestinationPtrU mockDest(new MockDestination(destinationName1));
     Logger::instance().addDestination(std::move(mockDest));
@@ -188,7 +182,6 @@ void TestLog::testLevelParsing()
 
 void TestLog::testDestinationRemove()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
     MockDestinationPtrU mockDest(new MockDestination(destinationName1));
     MockDestinationPtrU toAddAndRemove(new MockDestination(destinationName2));
@@ -198,7 +191,7 @@ void TestLog::testDestinationRemove()
     QLOG_INFO() << "one for all";
 
     // Wait for the log to finish writing.
-    QThread::msleep(100);
+    QThread::msleep(1000);
 
     mockDest = unique_cast(Logger::instance().removeDestination(destinationName1));
     toAddAndRemove = unique_cast(Logger::instance().removeDestination(destinationName2));
@@ -209,7 +202,7 @@ void TestLog::testDestinationRemove()
     QLOG_INFO() << "one for (almost) all";
 
     // Wait for the log to finish writing.
-    QThread::msleep(100);
+    QThread::msleep(1000);
 
     mockDest = unique_cast(Logger::instance().removeDestination(destinationName1));
     QCOMPARE(mockDest->messageCount(), 2);
@@ -221,7 +214,7 @@ void TestLog::testDestinationRemove()
     QLOG_INFO() << "another one for all";
 
     // Wait for the log to finish writing.
-    QThread::msleep(100);
+    QThread::msleep(1000);
 
     mockDest = unique_cast(Logger::instance().removeDestination(destinationName1));
     toAddAndRemove = unique_cast(Logger::instance().removeDestination(destinationName2));
@@ -232,7 +225,6 @@ void TestLog::testDestinationRemove()
 
 void TestLog::testWillRotate()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
     MockSizeRotationStrategy rotationStrategy;
     rotationStrategy.setBackupCount(1);
@@ -251,7 +243,6 @@ void TestLog::testWillRotate()
 
 void TestLog::testRotation_data()
 {
-    QMutexLocker lock(_mutex);
     QTest::addColumn<int>("backupCount");
 
     QTest::newRow("one backup") << 1;
@@ -262,7 +253,6 @@ void TestLog::testRotation_data()
 
 void TestLog::testRotation()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
 
     QFETCH(int, backupCount);
@@ -279,7 +269,6 @@ void TestLog::testRotation()
 
 void TestLog::testRotationNoBackup()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
     MockSizeRotationStrategy rotationStrategy;
     rotationStrategy.setBackupCount(0);
@@ -293,7 +282,6 @@ void TestLog::testRotationNoBackup()
 
 void TestLog::testDestinationType()
 {
-    QMutexLocker lock(_mutex);
     using namespace QsLogging;
 
     DestinationPtrU console = DestinationFactory::MakeDebugOutputDestination();

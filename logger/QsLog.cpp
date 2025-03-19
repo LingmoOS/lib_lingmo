@@ -192,11 +192,17 @@ bool Logger::shutDownLoggerThread()
 }
 #endif
 
-void Logger::addDestination(DestinationPtrU&& destination)
+void Logger::addDestination(DestinationPtrU destination)
 {
     Q_ASSERT(destination.get());
     QMutexLocker lock(&d->logMutex);
     d->destList.emplace_back(std::move(destination));
+}
+
+void Logger::addDestination(Destination* destination)
+{
+    Q_ASSERT(destination);
+    addDestination(DestinationPtrU(destination));
 }
 
 DestinationPtrU Logger::removeDestination(const QString &type)
@@ -213,7 +219,7 @@ DestinationPtrU Logger::removeDestination(const QString &type)
         return removed;
     }
 
-    return DestinationPtrU();
+    return std::move(DestinationPtrU());
 }
 
 bool Logger::hasDestinationOfType(const char* type) const
