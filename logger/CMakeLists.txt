@@ -15,8 +15,6 @@ set(CMAKE_MODULE_PATH
     "${CMAKE_MODULE_PATH}"
 )
 
-#include(QsLogConfigTargets)
-
 # Add a _d to debug binaries
 set(CMAKE_DEBUG_POSTFIX "_d")
 
@@ -116,12 +114,9 @@ endif()
 
 qt_add_library(LingmoLogger ${QS_LOG_LIBRARY_TYPE})
 
-# add_library(LingmoLogger ${QS_LOG_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${UI_SOURCE_FILES} ${RES_SOURCE_FILES})
-
 target_link_libraries(LingmoLogger PRIVATE Qt6::Core Qt6::Qml ${ADDITIONAL_LIBRARIES})
 
 set_target_properties(LingmoLogger  PROPERTIES 
-        PUBLIC_HEADER "${HEADER_FILES}"
         VERSION ${LIB_VERSION}
         SOVERSION ${LIB_VERSION_MAJOR}
 )
@@ -141,6 +136,7 @@ install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/temp/Lingmo/Logger DESTINATION ${I
 
 install(TARGETS LingmoLogger
         EXPORT  LingmoLoggerTargets
+        DESTINATION ${INSTALL_QMLDIR}/Lingmo/Logger
 )
 
 install(FILES ${HEADER_FILES} DESTINATION ${INSTALL_INCLUDEDIR}/LingmoLogger)
