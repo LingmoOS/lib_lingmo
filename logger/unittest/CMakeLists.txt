@@ -1,9 +1,9 @@
 set(PROJECTNAME QsLogUnitTest)
 project(${PROJECTNAME})
 
-find_package(Qt5Test REQUIRED)
+find_package(Qt6Test REQUIRED)
 
-include_directories(${QsLogUnitTest_SOURCE_DIR} ${QsLog_SOURCE_DIR})
+include_directories(${QsLogUnitTest_SOURCE_DIR} ${LingmoLogger_SOURCE_DIR})
 
 if(QS_LOG_IS_SHARED_LIBRARY)
 	# Ugh, ugly hack
@@ -26,4 +26,4 @@ set(SOURCE_FILES
 
 add_executable(${PROJECTNAME} ${SOURCE_FILES} ${HEADER_FILES})
 
-target_link_libraries(${PROJECTNAME} QsLog Qt5::Core Qt5::Test)
+target_link_libraries(${PROJECTNAME} LingmoLogger Qt6::Test)

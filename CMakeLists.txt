@@ -37,6 +37,6 @@ add_subdirectory(networkmanagement)
 add_subdirectory(screen)
 add_subdirectory(system)
 add_subdirectory(audio)
-add_subdirectory(easylogger)
+# add_subdirectory(easylogger)
 
 add_subdirectory(logger)

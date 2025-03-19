@@ -1,11 +1,11 @@
 # CMake build support courtesy of Axel Gembe <axel@gembe.net>
 cmake_minimum_required(VERSION 3.15)
 
-project(QsLog)
+project(LingmoLogger)
 
 # Add CMake modules
 set(CMAKE_MODULE_PATH
-    "${QsLog_SOURCE_DIR}/cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake"
     "${CMAKE_MODULE_PATH}"
 )
 
@@ -15,16 +15,17 @@ include(QsLogConfigTargets)
 set(CMAKE_DEBUG_POSTFIX "_d")
 
 # Qt6
-find_package(Qt6Core REQUIRED)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # As moc files are generated in the binary dir, tell to always look for includes there
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Specify build paths
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${QsLog_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${QsLog_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${QsLog_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 
 set(HEADER_FILES
 	QsLog.h
@@ -56,7 +57,7 @@ endif()
 # Use 10.7 OSX SDK
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.7")
 
-option(QS_LOG_LINE_NUMBERS "Automatically writes the file and line for each log message" OFF)
+option(QS_LOG_LINE_NUMBERS "Automatically writes the file and line for each log message" ON)
 if(QS_LOG_LINE_NUMBERS)
 	add_definitions(-DQS_LOG_LINE_NUMBERS)
 endif()
@@ -66,7 +67,7 @@ if(QS_LOG_DISABLE)
 	add_definitions(-DQS_LOG_DISABLE)
 endif()
 
-option(QS_LOG_SEPARATE_THREAD "Messages are queued and written from a separate thread" OFF)
+option(QS_LOG_SEPARATE_THREAD "Messages are queued and written from a separate thread" ON)
 if(QS_LOG_SEPARATE_THREAD)
 	add_definitions(-DQS_LOG_SEPARATE_THREAD)
 endif()
@@ -97,14 +98,14 @@ if(QS_LOG_BUILD_WINDOW)
     add_definitions(-DQS_LOG_WINDOW)
 endif()
 
-add_library(QsLog ${QS_LOG_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${UI_SOURCE_FILES} ${RES_SOURCE_FILES})
+add_library(LingmoLogger ${QS_LOG_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${UI_SOURCE_FILES} ${RES_SOURCE_FILES})
 
-target_link_libraries(QsLog Qt6::Core ${ADDITIONAL_LIBRARIES})
+target_link_libraries(LingmoLogger Qt6::Core ${ADDITIONAL_LIBRARIES})
 
-install(FILES ${HEADER_FILES} DESTINATION include/QsLog)
-QsLog_install_target(QsLog "")
+install(FILES ${HEADER_FILES} DESTINATION include/LingmoLogger)
+QsLog_install_target(LingmoLogger "")
 
-option(QS_LOG_BUILD_TESTS "Build unit tests" OFF)
+option(QS_LOG_BUILD_TESTS "Build unit tests" ON)
 if(QS_LOG_BUILD_TESTS)
 	add_subdirectory(unittest)
 endif()
