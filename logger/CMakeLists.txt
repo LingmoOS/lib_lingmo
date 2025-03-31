@@ -134,11 +134,11 @@ qt_add_qml_module(LingmoLogger
 
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/temp/Lingmo/Logger DESTINATION ${INSTALL_QMLDIR}/Lingmo)
 
+# For outside linking, we must install libraries and headers to ${CMAKE_INSTALL_LIBDIR} and ${CMAKE_INSTALL_INCLUDEDIR}
 install(TARGETS LingmoLogger
         EXPORT  LingmoLoggerTargets
-        DESTINATION ${INSTALL_QMLDIR}/Lingmo/Logger
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-
 install(FILES ${HEADER_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/LingmoLogger)
 
 set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/LingmoLogger")
